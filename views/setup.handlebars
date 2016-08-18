@@ -1,0 +1,83 @@
+<h3>Setting Up Curses</h3>
+	<p>This section is about customizing a Curses environment.Once the environment is running, there are
+	some functions that can be called to control the general behavior of the environment.  The functions 
+	need to be called after <code>initscr()</code>.</p>
+	
+	<h4>Windows</h4>
+	<p>When <code>initscr()</code> is called it creates a window that is initialized to the size of 
+	screen for the terminal you are using.  This window is called <code>stdscr</code>.  Functions 
+	that do not manipulate a choosen window use <code>stdscr</code> as the window.  You can create 
+	a different window by using a pointer to a <code>Window</code> object and calling the 
+	<code>newwin()</code>.  <code>newwin()</code> takes four arguments; height and width of the 
+	window, and the starting x and y position for the cursor.  You need to use <code>wrefresh()</code> 
+	and pass the pointer to the <code>WINDOW</code> object to render a window that is not <code>stdscr</code>. 
+	<code>delwin()</code> deletes the <code>WINDOW</code> object that is passed to it.</p>
+	<pre>
+	int main(){
+	   WINDOW *win;
+	   
+	   initscr();
+	   win = newwin(<i>height</i>, <i>width</i>, <i>start_y</i>, <i>start_x</i>);
+	   
+	   [some code]
+	   
+	   wrefresh(win);
+	   delwin();
+	   endwin();
+	   
+	   return 0;
+	}
+	</pre>
+	
+	<h4>Customize Environment</h4>
+	<p>When using a terminal you have to hit the Enter key to have a program read the characters you 
+	typed.  Curses can be set to read characters without having to hit the Enter key.  <code>cbreak()</code> 
+	and <code>raw()</code> set the environment to read characters as they are typed.  Both functions set 
+	the environment to read characters without have to use the Enter key but they are not interchangable.  
+	<code>cbreak()</code> allows the user to send interrupt, suspend, and quit signals using the signal 
+	characters.  <code>raw()</code> prevents the signal characters from sending the signal.  The original 
+	state of the environment can returned to by calling <code>nocbreak()</code> or <code>noraw()</code> 
+	depending on the which one was used.</p>
+	
+	<p>You can prevent the terminal from displaying the characters that you type by calling <code>noecho()</code>.
+	You can turn echoing(display characters typed) by calling <code>echo()</code>.  The function <code>curs_set()</code> 
+	is used to configure the display of the cursor.  It takes an integer argument; 0-Invisible, 1-Normal, 2-High Visibility.  
+	Options 1 and 2 are dependant on the terminal being used.</p>
+	<pre>
+	   curs_set(<i>int</i>);
+	</pre>
+	<figure>
+		<img src="images/cursset0.PNG" alt="curs_set(0)" height=400px width=500px>
+		<figcaption>curs_set(0)</figcaption>
+	</figure>
+	<figure>
+		<img src="images/cursset1.PNG" alt="curs_set(1)" height=400px width=500px>
+		<figcaption>curs_set(1)</figcaption>
+	</figure>
+	
+	
+	<p>Keyboards have keys that do not have a character assigned to them but send a squence of character.  The most 
+	common of these is the function keys.  These keys need to be translated by Curses.  Keyboard translation is not 
+	activated by default.  It can be activated by calling the function <code>keyboard()</code> and passing it a 
+	<code>WINDOW</code> pointer as the first argument and <code>TRUE</code> as the second argument.  Keyboard 
+	translation can be deactivated by passing <code>FALSE</code> instead of <code>TRUE</code>.</p>
+	
+	<pre>
+	int main(){
+	   WINDOW *win;
+	   
+	   initscr();
+	   cbreak();
+	   noecho();
+	   keyboard(stdscr, TRUE);
+	   
+	   [some code]
+	   
+	   nocbreak();
+	   endwin();
+	   
+	   return 0;
+	}
+	</pre>
+	
+	<p>The next section will discuss output functions.</p>

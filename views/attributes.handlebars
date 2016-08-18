@@ -1,0 +1,80 @@
+<h3>Text Attributes</h3>
+	<p>The Curses Library provides a set of constant variables that are used to 
+	effect the way text is displayed in the terminal.  By default the attributes are 
+	turned off.  The functions <code>attron()</code> and <code>wattron</code> are used to turn 
+	attributes.  The functions <code>attroff()</code> and <code>wattroff</code> are used to 
+	turn off atriubtes.  The attribute constant is passed to the function to either turn it on 
+	or turn it off.  The functions can be used for more than one attribute at a time.  Attributes 
+	need to be seperated by <code>|</code> if there is more than one.</p>
+	
+	<h4>Attribute Constants</h4>
+	<code>A_BOLD</code> Makes text bold<br>
+	<code>A_UNDERLINE</code> Underlines text<br>
+	<code>A_STANDOUT</code> Highlights text<br>
+	<code>A_BLINK</code> Makes text blink (not supported on all terminals)<br>
+	<code>A_INVIS</code> Makes text invisible<br>
+	<code>A_DIM</code> Makes text half bright<br>
+	<pre>
+	int main(){
+	   initscr(); 
+	   addstr("Normal");
+	   attron(A_BOLD);
+	   printw("Bold");	
+	   attroff(A_BOLD);
+	   attron(A_DIM);
+	   printw("Dim");
+	   attroff(A_DIM);
+	   attron(A_STANDOUT);
+	   printw("Standout");
+	   attroff(A_STANDOUT);
+	   attron(A_INVIS);
+	   printw("Invisible");
+	   attroff(A_INVIS);
+	   attron(A_UNDERLINE | A_BOLD);
+	   printw("Underline");
+	   attroff(A_UNDERLINE);
+	   refresh();
+	   endwin();
+	   return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/attributes.PNG" alt="attributes" height=400px width=500px>
+		<figcaption>Attributes</figcaption>
+	</figure>
+	
+	<h4>Colors</h4>
+	<p>Curses has functions that are used for coloring the text when it is displayed on the screen.  
+	The first step to adding color is to call <code>start_color()</code>.  It needs to be called 
+	after the Curses environment is initialized.  The next step is to setup color pairs.  A color 
+	pair is the combination of background color and text color.  A color pair is created by calling 
+	<code>init_pair()</code> and passing three arguments.  The first argument is a number used to 
+	identify the pair, the second argument is the text color, and the last argument is the back ground 
+	color.  The Curses Library has macros that define a few common colors.  A color pair is applied 
+	by passing <code>COLOR_PAIR()</code> to <code>attron()</code>.  <code>COLOR_PAIR</code> takes an 
+	integer argument that is the identifier for a color pair.  Not all terminals support colors.  The 
+	function <code>can_change_color</code> will return true if the terminal has colors and supports 
+	changing the colors.</p>
+	<pre>
+	int main(){
+	   initscr(); 
+	   
+	   start_color();
+	   init_pair(1, COLOR_RED, COLOR_BLACK);
+	   init_pair(2, COLOR_BLACK, COLOR_YELLOW);
+	   attron(COLOR_PAIR(1));
+	   addstr("Red");
+	   attroff(COLOR_PAIR(1));
+	   move(1, 0);
+	   attron(COLOR_PAIR(2));
+	   addstr("Yellow");
+	   attroff(COLOR_PAIR(2));
+	   refresh();
+	   endwin();
+	   return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/colors.PNG" alt="colors" height=400px width=500px>
+		<figcaption>Colors</figcaption>
+	</figure>

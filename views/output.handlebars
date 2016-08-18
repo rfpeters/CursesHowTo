@@ -1,0 +1,165 @@
+<h3>Displaying Characters</h3>
+	<p>This section is about the functions used to display characters on the screen.  There are 
+	three families of functions used for writing characters.  There is a family of functions for 
+	writing a character, one for strings, and one for formatted strings.  Each family has a base 
+	function and many variations.  The base function and a few of the common variations will be 
+	covered.  If you want to learn more you can read the <a href=http://pubs.opengroup.org/onlinepubs/007908799/xcurses/curses.h.html>Curses API</a>.  
+	Before moving onto the output functions there are a couple of small topics that need to be 
+	discussed.</p>
+	
+	<h4>Window Functions</h4>
+	<p>Most Curses functions have two primary variants.  One variant is used for the current 
+	window.  The other variant is used for a specified window.  The naming convention for functions 
+	that are used on a specified window is to add a <code>w</code> to the beginning or the end of the name
+	of the function that acts on the current window.  Functions that work on a specified window takes 
+	the given window as a the first argument, all the other arguments are the same as the function 
+	that uses the current window.  The examples for the rest of the guide will use functions for 
+	the current window but will provide the name for both functions.</p>
+	<pre>
+	addch();
+	waddch();
+	</pre>
+	
+	<h4>Moving the Cursor</h4>
+	<p>The functions <code>move()</code> and <code>wmove()</code> are used to move the cursor to a 
+	specified position on the window.  It takes two integer arguments, y position and x position.  
+	Output will start at the specified position and continue as normal.  The cursor is not moved 
+	until <code>refresh()</code> is called.  Most functions have a variant that moves the cursor 
+	before performing its normal action.  The variants typically have <code>mv</code> added to the 
+	beginning of the function name and take the y position and x position as the first two arguments.</p>
+	<pre>
+	int main(){
+		initscr(); 
+		
+		move(2, 2);
+		printw("Curses");
+		
+		refresh();  
+		endwin(); 		
+		return 0;
+	} 
+	</pre>
+	<figure>
+		<img src="images/move.PNG" alt="move" height=400px width=500px>
+		<figcaption>Move to row 2, column 2</figcaption>
+	</figure>
+	
+	<h4>Display Character</h4>
+	<p>The functions <code>addch()</code> and <code>waddch()</code> adds a character to the cursor's 
+	current position and advances the cursor position.  The character is passed as an arugment to the 
+	function.  <code>mvaddch()</code> and <code>mvwaddch()</code> move the cursor to a given position 
+	before the character is added.</p>
+	<pre>
+	int main(){
+		initscr();  
+		
+		addch('1');
+		mvaddch(5, 5, '2');
+		
+		refresh();  
+		endwin();		
+		return 0;
+	} 
+	</pre>
+	<figure>
+		<img src="images/addch.PNG" alt="addch" height=400px width=500px>
+		<figcaption>addch()</figcaption>
+	</figure>
+	
+	<h4>Display String</h4>
+	<p>The functions <code>addstr()</code> and <code>waddstr()</code> adds a string to the cursor's 
+	current position and advances the cursor position.  The string is passed as an arugment to the 
+	function.  <code>mvaddstr()</code> and <code>mvwaddstr()</code> move the cursor to a given position 
+	before the string is added.</p>
+	<pre>
+	int main(){
+		initscr();  
+		
+		addstr("Current Position");
+		mvaddstr(5, 5, "Moved Position");
+		
+		refresh();  
+		endwin();  		
+		return 0;
+	} 
+	</pre>
+	<figure>
+		<img src="images/addstr.PNG" alt="addstr" height=400px width=500px>
+		<figcaption>addstr()</figcaption>
+	</figure>
+	
+	<h4>Display Formatted String</h4>
+	<p>The functions <code>printw()</code> and <code>wprintw()</code> adds a formatted string to the cursor's 
+	current position and advances the cursor position.  The formatted string and options are passed as an arugment to the 
+	function.  <code>mvprintw()</code> and <code>mvwprintw()</code> move the cursor to a given position 
+	before the string is added.</p>
+	<pre>
+	int main(){
+		initscr();  
+		
+		printw("%s %d", "Formatted String", 1);
+		mvprintw(5, 5, "%s %d", "Formatted String", 2);
+		
+		refresh();  
+		endwin(); 		
+		return 0;
+	} 
+	</pre>
+	<figure>
+		<img src="images/printw.PNG" alt="printw" height=400px width=500px>
+		<figcaption>printw()</figcaption>
+	</figure>
+	
+	<h4>Inserting Characters</h4>
+	<p>There are couple of things that need to be kept in mind when using Curses.  Displayed characters and 
+	strings stay on the screen until it is cleared or the Curses environment is removed.  The display will 
+	presist over multiple <code>refresh()</code> calls.  This could lead to overwriting the display when using 
+	the add functions and <code>printw</code>.</p>
+	<pre>
+	int main(){
+		initscr();
+		
+		addstr("String 1");
+		refresh();
+		mvaddstr(0, 5, "String 2");
+		refresh(); 
+		
+		endwin();   		
+		return 0;
+	} 
+	</pre>
+	<figure>
+		<img src="images/overwrite.PNG" alt="overwrite" height=400px width=500px>
+		<figcaption>Overwriting</figcaption>
+	</figure>
+	
+	<p>There is a family of functions for inserting a character and one for inserting a sring.  When the 
+	insert functions are used the character or string is added to the window and shift conflicting characters 
+	instead of overwriting characters.  The <code>insch</code> is used to insert a character and the 
+	<code>insstr</code> family is used to insert strings.  Both families have variants for moving the cursor 
+	and using a specific window.</p>
+	<pre>
+	int main(){
+		initscr(); 
+		
+		addstr("String 1");
+		refresh();
+		mvinsstr(0, 5, "String 2");
+		refresh();  
+		
+		endwin();   
+		return 0;
+	} 
+	</pre>
+	<figure>
+		<img src="images/insert.PNG" alt="insert" height=400px width=500px>
+		<figcaption>Inserting a string</figcaption>
+	</figure>
+	
+	<h4>Using Non-Curses Functions</h4>
+	<p>The Curses functions have to used to output to the screen.  Trying to use <code>printf()</code> while 
+	a Curses environment is active the behavior will be unpredictable.  The string for <code>printf()</code> 
+	could be displayed in the Curses environment, in the terminal as it normally is after the Curses environment 
+	is removed, or not displayed at all.</p>
+
+	<p>The next section will discuss getting information from the terminal.</p>

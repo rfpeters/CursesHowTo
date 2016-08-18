@@ -1,0 +1,58 @@
+<h3>Using Curses</h3>	
+	<p>This section is about the initializing and removing the Curses environment.  Most Unix, Linux, and 
+	BSD operating systems come will with Curses or Ncurses.  If you are using Windows you will have to get 
+	Ncurses for a program such as Cygwin or MinGW.  If your distrobution does not come with Curses or Ncurses 
+	you can download the Ncurses Library from <a href=http://ftp.gnu.org/gnu/ncurses/>GNU</a>.</p>
+
+	<p>The first setp is to include the <code>curses.h</code> file in you source code.</p>
+	<pre>
+	#include &ltcurses.h&gt
+	</pre>
+	
+	<p>When you compile the code you need to link the Curses Library.  If you do not link the library 
+	the compiler will not build your program.  There will be errors for every Curses function you used 
+	in the program.</p>
+	<pre>
+	g++ [file] -o [program] -lcurses
+	</pre>
+	<figure>
+		<img src="images/NotLinked.PNG" alt="not linked" height=400px width=500px>
+		<figcaption>Example of not linking Curses Library</figcaption>
+	</figure>
+	
+	<p>There are three functions that are needed to uses Curses in a program.  The first of these functions 
+	<code>initscr()</code> is used to initialize the Curses environment. The function creates an environment 
+	that uses Curses within the terminal.  If you do not call <code>initscr()</code>, Curses specific functions
+	will not work.  A Curses environment can be created anywhere in the program.  You can use regular C/C++ code 
+	before and after using Curses.  If you try to use C/C++ output that is not supported in Curses it will not 
+	be displayed to the screen.</p>
+	
+	<p>The second function need is <code>endwin()</code>.  This will remove the Curses environment.  When it is 
+	called regular function will be reurned to the terminal.  If this function is not called the terminal will 
+	not function properly.  The prompt will be displayed in the last cursor position within the curses environment.
+	You can use the terminal as you normally would but there will be some abnormal behavior.</p>
+	
+	<p>The first two functions were for creating and removing a Curses environment.  The last function you need is 
+	used to display information on the screen, <code>refresh()</code>.  When a function is called that is used to 
+	print information to the screen or move the cursor, the data is stored in memory.  <code>refesh()</code> is used 
+	to print the data from memory to the screen.  This allows a program to create an entire screen and print it all 
+	at once instead printing inoformation one line at a time.</p>
+	<pre>
+	#include <curses.h>
+	
+	int main(){
+		initscr();  		
+		printw("Curses");		
+		refresh();  
+		endwin();  
+		
+		return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/curses.PNG" alt="not linked" height=400px width=500px>
+		<figcaption>Curses Environment</figcaption>
+	</figure>
+	
+	
+	<p>The next section will discuss some commonly used functions used for setting up a Curses environment.</p>

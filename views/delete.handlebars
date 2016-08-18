@@ -1,0 +1,91 @@
+<h3>Delete Functions</h3>
+	<p>Similarly to the groups of output and input functions, there are three families of functions 
+	that are used to delete characters from the screen.  One family is used to delete a single 
+	character, one for deleting a line, and a group of functions for clearig entire screen.  The 
+	delete functios do not have as many variants as the output and input functions.</p>
+	
+	<h4>Delete a Character</h4>
+	<p>The functions <code>delch()</code> and <code>wdelch()</code> are used to delete a character at the 
+	current position of the cursor.  When the character is deleted the characters to the right of the 
+	one deleted are shifted to the left.  <code>mvdelch()</code> and <code>mvwdelch</code> move the 
+	cursor before deleting the character.</p>
+	<pre>
+	int main(){
+	   initscr();
+	   
+	   mvprintw(5, 0, "Curses");
+	   getch();  //used to pause screen
+	   move(5, 1);
+	   delch();
+	   
+	   refresh();
+	   return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/beforedelch.PNG" alt="before delch" height=400px width=500px>
+		<figcaption>Before delch()</figcaption>
+	</figure>
+	<figure>
+		<img src="images/afterdelch.PNG" alt="after delch" height=400px width=500px>
+		<figcaption>After delch()</figcaption>
+	</figure>
+	
+	<h4>Delete a Line</h4>
+	<p> The functions <code>deleteln()</code> and <code>wdeleteln()</code> are used to delete the line where 
+	the cursor currently is.  The lines after the one deleted are moved to fill where the removed line 
+	was.  The delete line functions do not have a variant for performing a move and delete in one function 
+	call.</p>
+	<pre>
+	int main(){
+	   initscr();
+	   
+	   mvprintw(5, 0, "Line1");
+	   mvprintw(6, 0, "Line2");
+	   mvprintw(7, 0, "Line3");
+	   getch();  //used to pause screen
+	   move(6, 0);
+	   deleteln();
+	   
+	   refresh();
+	   return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/beforedeleteln.PNG" alt="before deleteln" height=400px width=500px>
+		<figcaption>Before deleteln()</figcaption>
+	</figure>
+	<figure>
+		<img src="images/afterdeleteln.PNG" alt="after deleteln" height=400px width=500px>
+		<figcaption>After deleteln()</figcaption>
+	</figure>
+	
+	<h4>Clearing the Window</h4>
+	<p>The functions <code>clear()</code> and <code>wclear()</code> are used to clear every position 
+	in the window.  There is an other set of  functions for clearing the screen.  <code>erase()</code> 
+	and <code>werase()</code> clear the window and redraw it when <code>refesh()</code> is called next.  
+	I have not noticed a difference between <code>clear()</code> and <code>erase()</code>.  The difference 
+	will probably be noticable in large applications that putting large amounts of information in the 
+	window.</p>
+	<pre>
+	int main(){
+	   initscr();
+	   
+	   printw("Curses");
+	   getch();  //used to pause screen
+	   clear();
+	   
+	   refresh();
+	   return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/beforeclear.PNG" alt="before clear" height=400px width=500px>
+		<figcaption>Before clear()</figcaption>
+	</figure>
+	<figure>
+		<img src="images/afterclear.PNG" alt="after clear" height=400px width=500px>
+		<figcaption>After clear()</figcaption>
+	</figure>
+	
+	<p>The next section is about text atrributes.</p>

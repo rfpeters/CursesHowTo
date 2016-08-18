@@ -1,0 +1,75 @@
+<h3>Input Functions</h3>
+	<p>This section will cover some of the functions for getting user input.  Curses has two families 
+	of functions that are used for getting input from the terminal.  There is one family for getting 
+	a single character and two for getting strings.  The familie are the similar to the output families 
+	of functions.  They have a variant for the current window, a given window, and moving the cursor 
+	before getting the input.</p>
+	
+	<h4>Getting a Character</h4>
+	<p>The functions <code>getch()</code> and <code>wgetch()</code> are used to get a single character 
+	from the terminal.  The inputted character is returned from function as an integer.  An integer or
+	character variable can be used to store the character.  <code>mvgetch</code> and <code>mvwgetch</code> 
+	move the cursor before getting the character.  These functions read a character when it is entered 
+	regardless of the terminal mode, cooked, raw, or cbreak.</p>
+	<pre>
+	int main(){
+	   char ch;
+	   int ch2;
+	   initscr();
+	   
+	   ch = getch();
+	   ch2 = getch();
+	   addch(ch);
+	   mvaddch(5, 5, ch2);
+	   
+	   refresh();
+	   return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/getch.PNG" alt="getch" height=400px width=500px>
+		<figcaption>getch()</figcaption>
+	</figure>
+	
+	<h4>Getting a String</h4>
+	<p>The functions <code>getstr()</code> and <code>wgetstr()</code> are used to get a string 
+	from the terminal.  The variable for storing the string is passed as an argument.  The vairable needs 
+	to be a character array, using a pointer to character will cause a Segmentation Fault when the second 
+	character is typed.  <code>mvgetstr</code> and <code>mvwgetstr</code> move the cursor before getting 
+	the character.  The Enter/Return key needs to be pressed to read the string regardless of the terminal 
+	mode, cooked, raw, or cbreak.  All the characters entered are stored in the vairable regardless of the 
+	variable size.  This does not seem to cause the problems that can be produced when using the terminal 
+	in its normal mode.  Printing the string will print the entire string even if an array with five 
+	elements is used to store a string with more than five characters.  Access a character with a subscript 
+	outside the original size of the array works with out a problem.</p>
+	<pre>
+	int main(){
+	   char str[10];
+	   initscr();
+	   
+	   getstr(str);
+	   addstr(str);
+	  	   
+	   refresh();
+	   return 0;
+	}
+	</pre>
+	<figure>
+		<img src="images/getstr.PNG" alt="getstr" height=400px width=500px>
+		<figcaption>getstr()</figcaption>
+	</figure>
+	
+	<h4>Getting a Formatted String</h4>
+	<p>The functions <code>scanw()</code> and <code>wscanw()</code> are used to get a string and store 
+	it in different variables.  The formatted string and variables are passed as arugments.  <code>mvscanw</code> 
+	and <code>mvwscanw</code> move the cursor before getting the character.  The Enter/Return key needs to be 
+	pressed to read the string regardless of the terminal mode, cooked, raw, or cbreak.  These functions have 
+	problems and I have found them to be unusable.  There is a warning when compiling the code that uses 
+	<code>scanw()</code>.  I have tried to storing a string in a character array and a pointer to a character.  
+	Using a character array causes a Segmentation Fault.  Using a pointer does not store the string.  When trying 
+	to display the string it displays <code>(null)</code>.  I have also tried reading and storing an integer.  
+	Then integer I entered was not stored in the variable provided.  I used both an int variable and an integer 
+	pointer, neither worked.  A random number was stored in the variable if it was not initialized.  If the 
+	variable was intialized the </p>
+	
+	<p>The next section of the guide will be discuss removing characters from the screen.</p>

@@ -1,0 +1,48 @@
+<!--
+Author: Ryan Peters
+Date: 03/07/16
+Assignment: How To
+Descritption:  Handlebar layout file.  The body is created in the view files.
+-->
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>How To: Curses Library</title>	
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+  </head>
+  <body>
+	<div class='page'>
+		<div class='page_header'>
+			<h1>{{title}}</h1>
+		</div>
+		<div class='body'>
+			<div class='text'>
+				{{{body}}}
+			</div>
+			<div class='navigation'>
+				<h4>Sections</h4>
+				<ol>
+					<li><a href='/intro'>Section 1: Introduction</a></li>
+					<li><a href='/useCurses'>Section 2: Using Curses</a></li>
+					<li><a href='/setup'>Section 3: Setting Up Curses</a></li>
+					<li><a href='/output'>Section 4: Output Functions</a></li>
+					<li><a href='/input'>Section 5: Input Functions</a></li>
+					<li><a href='/delete'>Section 6: Delete Functions</a></li>
+					<li><a href='/attributes'>Section 7: Attributes</a></li>
+				</ol>
+			</div>
+		</div>
+		<div class='pager'>
+			{{#if prev}}
+				<a href={{prev}}>Prev</a>
+			{{/if}}
+			{{#if next}}
+				<a href={{next}}>Next</a>
+			{{/if}}
+		</div>
+	</div>
+  </body>
+</html>

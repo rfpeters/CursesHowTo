@@ -1,0 +1,37 @@
+<h3 class='sub_header'>About this guide</h3>
+	<p>This guide for getting started with the basics of the Curses Library using C++ as the programming language.
+	I will be using be using a Unix/Linux system and GNU complier to build and run the examples.  I have looked 
+	online for information about programming with Curses but have not found examples that provide an explanation 
+	of how Curses works.  I will focus on some of the basic functions for Curses and a simple animation.  The best
+	tutorial for curses I have seen is "Introduction to the Unix Curses Library" by Norman Matloff.  There is two 
+	example programs with simple comments on what the curses functions are doing.  There is not much in depth explanation.  
+	This guide will provide more information about the basics of using Curses.</p>
+	
+	<h4>About Curses</h4>
+	<p>Terminals allow the user to move the cursor around the screen, clear part of the screen, and change the color
+	of the text among other capabilities.  You can do this by using escape characters.  A terminal has a set of 
+	escape characters and the key strokes needed to enter an escape character.  This not a problem when using
+	a terminal directly.  It becomes a problem when writing a program that uses the functionality of the terminal.  
+	Terminals have different escape so making a portable program is difficult if not impossible.</p>
+	
+	<p>The Curses Library was developed to allow programs to use the full functionality of a terminal while being 
+	portable.  Curses accomplishes this by creating a wrapper for the teminal.  When a call is made using Curses, it 
+	will provide the proper escape sequence for the treminal the program is running on.  Programs such as <b>vi</b>, 
+	DOS and *NIX text based installers, and text based games.</p>
+	
+	<p>The base Curses Library is no longer supported and has been replaced with Ncurses.  Most Unix based operating 
+	systems come with Ncurses and some will still have the Curses Library.  Pradeep Padala has created a good guide 
+	for using Ncurses but it may be out-of-date.  It was last updated in June, 2005 and Ncurses 6.0 was released in 
+	August, 2015.</p>
+	
+	<p>The next section is going to discuss building and the basic for running a program with Curses.</p>
+	<div>
+		<h4>More Information</h4>
+		<ul>
+			<li><a href=http://pubs.opengroup.org/onlinepubs/007908799/xcurses/curses.h.html>Curses API</a></li>
+			<li><a href=http://heather.cs.ucdavis.edu/~matloff/UnixAndC/CLanguage/Curses.pdf>Introduction to the Unix Curses Library: Norman Matloff</a></li>
+			<li><a href=http://tldp.org/HOWTO/NCURSES-Programming-HOWTO/>NCURSES Programming HOWTO: Pradeep Padala</a></li>
+		</ul>
+	</div>
+	
+	<p>The next section will discuss starting using Curses in a program.</p>
